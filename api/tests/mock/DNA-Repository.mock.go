@@ -30,6 +30,35 @@ func (m *MockDNARepository) EXPECT() *MockDNARepositoryMockRecorder {
 	return m.recorder
 }
 
+// AddDNA mocks base method.
+func (m *MockDNARepository) AddDNA(arg0 []string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddDNA", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AddDNA indicates an expected call of AddDNA.
+func (mr *MockDNARepositoryMockRecorder) AddDNA(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddDNA", reflect.TypeOf((*MockDNARepository)(nil).AddDNA), arg0)
+}
+
+// CheckIfDNAExists mocks base method.
+func (m *MockDNARepository) CheckIfDNAExists(arg0 []string) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CheckIfDNAExists", arg0)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CheckIfDNAExists indicates an expected call of CheckIfDNAExists.
+func (mr *MockDNARepositoryMockRecorder) CheckIfDNAExists(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CheckIfDNAExists", reflect.TypeOf((*MockDNARepository)(nil).CheckIfDNAExists), arg0)
+}
+
 // StatsHumanSimian mocks base method.
 func (m *MockDNARepository) StatsHumanSimian() (protocols.StatsResponse, error) {
 	m.ctrl.T.Helper()
@@ -44,4 +73,3 @@ func (mr *MockDNARepositoryMockRecorder) StatsHumanSimian() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatsHumanSimian", reflect.TypeOf((*MockDNARepository)(nil).StatsHumanSimian))
 }
-
