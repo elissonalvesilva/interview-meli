@@ -1,6 +1,8 @@
 package entity
 
-import "errors"
+import (
+	"errors"
+)
 
 type DNASequence struct {
 	DNA []string `json:"dna"`
@@ -15,7 +17,8 @@ var (
 )
 
 func NewDNA(dna []string) (*DNASequence, error) {
-	if dna == nil {
+
+	if len(dna) <= 0 {
 		return nil, ErrEmptyDNA
 	}
 
