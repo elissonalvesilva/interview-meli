@@ -31,17 +31,17 @@ func (m *MockDNARepository) EXPECT() *MockDNARepositoryMockRecorder {
 }
 
 // AddDNA mocks base method.
-func (m *MockDNARepository) AddDNA(arg0 []string) error {
+func (m *MockDNARepository) AddDNA(arg0 []string, arg1 string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AddDNA", arg0)
+	ret := m.ctrl.Call(m, "AddDNA", arg0, arg1)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // AddDNA indicates an expected call of AddDNA.
-func (mr *MockDNARepositoryMockRecorder) AddDNA(arg0 interface{}) *gomock.Call {
+func (mr *MockDNARepositoryMockRecorder) AddDNA(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddDNA", reflect.TypeOf((*MockDNARepository)(nil).AddDNA), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddDNA", reflect.TypeOf((*MockDNARepository)(nil).AddDNA), arg0, arg1)
 }
 
 // CheckIfDNAExists mocks base method.
