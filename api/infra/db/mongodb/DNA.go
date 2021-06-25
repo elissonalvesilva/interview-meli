@@ -4,17 +4,18 @@ import (
 	"context"
 	"github.com/elissonalvesilva/interview-meli/api/domain/entity"
 	"github.com/elissonalvesilva/interview-meli/api/domain/protocols"
+	"github.com/elissonalvesilva/interview-meli/api/infra/db/mongodb/helper"
 	"github.com/elissonalvesilva/interview-meli/api/shared/constants"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
 type DNADatabase struct {
-	db MongoDB
+	db helper.MongoDB
 }
 
 const collectionName = "dna"
 
-func NewDNADatabase (db MongoDB) *DNADatabase {
+func NewDNADatabase (db helper.MongoDB) *DNADatabase {
 	return &DNADatabase{
 		db: db,
 	}

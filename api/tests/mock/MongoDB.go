@@ -2,7 +2,7 @@ package mock
 
 import (
 	"context"
-	"github.com/elissonalvesilva/interview-meli/api/infra/db/mongodb"
+	"github.com/elissonalvesilva/interview-meli/api/infra/db/mongodb/helper"
 	"github.com/golang/mock/gomock"
 	"go.mongodb.org/mongo-driver/mongo"
 	"reflect"
@@ -32,10 +32,10 @@ func (m *MockMongoDB) EXPECT() *MockMongoDBMockRecorder {
 }
 
 // Client mocks base method.
-func (m *MockMongoDB) Client() mongodb.ClientHelper {
+func (m *MockMongoDB) Client() helper.ClientHelper {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Client")
-	ret0, _ := ret[0].(mongodb.ClientHelper)
+	ret0, _ := ret[0].(helper.ClientHelper)
 	return ret0
 }
 
@@ -46,10 +46,10 @@ func (mr *MockMongoDBMockRecorder) Client() *gomock.Call {
 }
 
 // Collection mocks base method.
-func (m *MockMongoDB) Collection(name string) mongodb.CollectionHelper {
+func (m *MockMongoDB) Collection(name string) helper.CollectionHelper {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Collection", name)
-	ret0, _ := ret[0].(mongodb.CollectionHelper)
+	ret0, _ := ret[0].(helper.CollectionHelper)
 	return ret0
 }
 
@@ -128,10 +128,10 @@ func (mr *MockCollectionHelperMockRecorder) Find(arg0, arg1 interface{}) *gomock
 }
 
 // FindOne mocks base method.
-func (m *MockCollectionHelper) FindOne(arg0 context.Context, arg1 interface{}) mongodb.SingleResultHelper {
+func (m *MockCollectionHelper) FindOne(arg0 context.Context, arg1 interface{}) helper.SingleResultHelper {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FindOne", arg0, arg1)
-	ret0, _ := ret[0].(mongodb.SingleResultHelper)
+	ret0, _ := ret[0].(helper.SingleResultHelper)
 	return ret0
 }
 
@@ -231,10 +231,10 @@ func (mr *MockClientHelperMockRecorder) Connect() *gomock.Call {
 }
 
 // Database mocks base method.
-func (m *MockClientHelper) Database(arg0 string) mongodb.MongoDB {
+func (m *MockClientHelper) Database(arg0 string) helper.MongoDB {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Database", arg0)
-	ret0, _ := ret[0].(mongodb.MongoDB)
+	ret0, _ := ret[0].(helper.MongoDB)
 	return ret0
 }
 

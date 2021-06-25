@@ -5,10 +5,10 @@ import (
 	"errors"
 	"github.com/elissonalvesilva/interview-meli/api/domain/entity"
 	"github.com/elissonalvesilva/interview-meli/api/domain/protocols"
-	"github.com/elissonalvesilva/interview-meli/api/infra/db/mongodb"
 	"github.com/elissonalvesilva/interview-meli/api/tests/mock"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
+
 	"testing"
 )
 
@@ -27,7 +27,7 @@ func TestCheckIfDNAExists(t *testing.T) {
 
 		mockCollection.EXPECT().FindOne(gomock.Any(), gomock.Any()).Return(mockSingleResult)
 
-		sut := mongodb.NewDNADatabase(mockDb)
+		sut := NewDNADatabase(mockDb)
 		resp, err := sut.CheckIfDNAExists(mock.DNA)
 		assert.Error(t, err, handlerError)
 		assert.Equal(t, false, resp)
@@ -46,7 +46,7 @@ func TestCheckIfDNAExists(t *testing.T) {
 
 		mockCollection.EXPECT().FindOne(gomock.Any(), gomock.Any()).Return(mockSingleResult)
 
-		sut := mongodb.NewDNADatabase(mockDb)
+		sut := NewDNADatabase(mockDb)
 		resp, err := sut.CheckIfDNAExists(mock.DNA)
 		assert.Nil(t, err)
 		assert.Equal(t, true, resp)
@@ -65,7 +65,7 @@ func TestAddDNA(t *testing.T) {
 
 		mockCollection.EXPECT().InsertOne(gomock.Any(), gomock.Any()).Return(entity.DNASequence{}, errors.New(handlerError))
 
-		sut := mongodb.NewDNADatabase(mockDb)
+		sut := NewDNADatabase(mockDb)
 
 		err := sut.AddDNA(mock.DNA, "SIMIAN")
 		assert.Error(t, err, handlerError)
@@ -81,7 +81,7 @@ func TestAddDNA(t *testing.T) {
 
 		mockCollection.EXPECT().InsertOne(gomock.Any(), gomock.Any()).Return(mock.AddedDNA, nil)
 
-		sut := mongodb.NewDNADatabase(mockDb)
+		sut := NewDNADatabase(mockDb)
 
 		err := sut.AddDNA(mock.DNA, "SIMIAN")
 		assert.Nil(t, err)
@@ -103,7 +103,7 @@ func TestStatsHumanSimian(t *testing.T)  {
 
 		mockCollection.EXPECT().CountDocuments(ctx, gomock.Any()).Return(int64(0), errors.New(handlerError))
 
-		sut := mongodb.NewDNADatabase(mockDb)
+		sut := NewDNADatabase(mockDb)
 
 		resp, err := sut.StatsHumanSimian()
 		assert.Error(t, err, handlerError)
@@ -128,7 +128,7 @@ func TestStatsHumanSimian(t *testing.T)  {
 			mockCollection.EXPECT().CountDocuments(ctx, gomock.Any()).Return(int64(0), errors.New(handlerError)),
 		)
 
-		sut := mongodb.NewDNADatabase(mockDb)
+		sut := NewDNADatabase(mockDb)
 
 		resp, err := sut.StatsHumanSimian()
 		assert.Error(t, err, handlerError)
@@ -154,7 +154,7 @@ func TestStatsHumanSimian(t *testing.T)  {
 			mockCollection.EXPECT().CountDocuments(ctx, gomock.Any()).Return(countSimian, nil),
 		)
 
-		sut := mongodb.NewDNADatabase(mockDb)
+		sut := NewDNADatabase(mockDb)
 
 		resp, err := sut.StatsHumanSimian()
 		assert.Nil(t, err)
@@ -184,7 +184,7 @@ func TestStatsHumanSimian(t *testing.T)  {
 			mockCollection.EXPECT().CountDocuments(ctx, gomock.Any()).Return(countSimian, nil),
 		)
 
-		sut := mongodb.NewDNADatabase(mockDb)
+		sut := NewDNADatabase(mockDb)
 
 		resp, err := sut.StatsHumanSimian()
 		assert.Nil(t, err)

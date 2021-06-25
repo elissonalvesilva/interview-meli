@@ -1,0 +1,17 @@
+mode: set
+github.com/elissonalvesilva/interview-meli/api/domain/entity/DNA.go:19.49,21.19 1 1
+github.com/elissonalvesilva/interview-meli/api/domain/entity/DNA.go:25.2,25.31 1 1
+github.com/elissonalvesilva/interview-meli/api/domain/entity/DNA.go:21.19,23.3 1 0
+github.com/elissonalvesilva/interview-meli/api/domain/services/DNA-Service.go:15.63,19.2 1 1
+github.com/elissonalvesilva/interview-meli/api/domain/services/DNA-Service.go:21.77,24.16 2 1
+github.com/elissonalvesilva/interview-meli/api/domain/services/DNA-Service.go:28.2,28.19 1 1
+github.com/elissonalvesilva/interview-meli/api/domain/services/DNA-Service.go:24.16,26.3 1 1
+github.com/elissonalvesilva/interview-meli/api/domain/services/DNA-Service.go:31.74,33.25 2 1
+github.com/elissonalvesilva/interview-meli/api/domain/services/DNA-Service.go:37.2,38.16 2 1
+github.com/elissonalvesilva/interview-meli/api/domain/services/DNA-Service.go:42.2,42.17 1 1
+github.com/elissonalvesilva/interview-meli/api/domain/services/DNA-Service.go:46.2,48.24 3 1
+github.com/elissonalvesilva/interview-meli/api/domain/services/DNA-Service.go:52.2,52.25 1 1
+github.com/elissonalvesilva/interview-meli/api/domain/services/DNA-Service.go:33.25,35.3 1 1
+github.com/elissonalvesilva/interview-meli/api/domain/services/DNA-Service.go:38.16,40.3 1 1
+github.com/elissonalvesilva/interview-meli/api/domain/services/DNA-Service.go:42.17,44.3 1 1
+github.com/elissonalvesilva/interview-meli/api/domain/services/DNA-Service.go:48.24,50.3 1 1
