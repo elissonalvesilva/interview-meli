@@ -102,7 +102,7 @@ func TestAddDNA(t *testing.T) {
 
 		handlerError := "handlerError"
 		mockDNARepository.EXPECT().CheckIfDNAExists(mock.DNA).Return(false, nil)
-		mockDNARepository.EXPECT().AddDNA(mock.DNA).Return(errors.New(handlerError))
+		mockDNARepository.EXPECT().AddDNA(mock.DNA, "SIMIAN").Return(errors.New(handlerError))
 
 		sut := services.NewDNAService(mockDNARepository)
 		resp, err := sut.CreateDNA(mock.DNA)
@@ -119,7 +119,7 @@ func TestAddDNA(t *testing.T) {
 		mockDNARepository := mock.NewMockDNARepository(ctrl)
 
 		mockDNARepository.EXPECT().CheckIfDNAExists(mock.DNA).Return(false, nil)
-		mockDNARepository.EXPECT().AddDNA(mock.DNA).Return(nil)
+		mockDNARepository.EXPECT().AddDNA(mock.DNA, "SIMIAN").Return(nil)
 
 		sut := services.NewDNAService(mockDNARepository)
 		resp, err := sut.CreateDNA(mock.DNA)
