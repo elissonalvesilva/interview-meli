@@ -6,6 +6,6 @@ import (
 
 type DNARepository interface {
 	CheckIfDNAExists([]string) (bool, error)
-	AddDNA([]string) error
+	AddDNA([]string, string) error
 	StatsHumanSimian() (protocols.StatsResponse, error)
 }
