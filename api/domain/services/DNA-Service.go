@@ -43,7 +43,8 @@ func (s *DNAService) CreateDNA(dna []string) (entity.DNASequence, error) {
 		return entity.DNASequence{}, errors.New(constants.DNAExists)
 	}
 
-	errToAddDNA := s.repo.AddDNA(createdDNA.DNA)
+	dnaType := "SIMIAN"
+	errToAddDNA := s.repo.AddDNA(createdDNA.DNA, dnaType)
 	if errToAddDNA != nil {
 		return entity.DNASequence{}, errToAddDNA
 	}
