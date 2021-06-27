@@ -10,11 +10,13 @@ import (
 
 type DNAService struct {
 	repo repository.DNARepository
+	analyzerService DNAAnalyzeService
 }
 
-func NewDNAService(repo repository.DNARepository) *DNAService {
+func NewDNAService(repo repository.DNARepository, analyzerService DNAAnalyzeService) *DNAService {
 	return &DNAService{
 		repo: repo,
+		analyzerService: analyzerService,
 	}
 }
 
@@ -43,10 +45,18 @@ func (s *DNAService) CreateDNA(dna []string) (entity.DNASequence, error) {
 		return entity.DNASequence{}, errors.New(constants.DNAExists)
 	}
 
-	dnaType := "SIMIAN"
+	dnaType, errAnalyzer := s.analyzerService.Analyze(createdDNA.DNA)
+	if errAnalyzer != nil {
+		return entity.DNASequence{}, errAnalyzer
+	}
+
 	errToAddDNA := s.repo.AddDNA(createdDNA.DNA, dnaType)
 	if errToAddDNA != nil {
 		return entity.DNASequence{}, errToAddDNA
+	}
+
+	if dnaType == constants.DNATypeHuman {
+		return entity.DNASequence{}, errors.New(constants.DNATypeHuman)
 	}
 
 	return *createdDNA, nil
