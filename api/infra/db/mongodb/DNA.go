@@ -7,6 +7,7 @@ import (
 	"github.com/elissonalvesilva/interview-meli/api/infra/db/mongodb/helper"
 	"github.com/elissonalvesilva/interview-meli/api/shared/constants"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type DNADatabase struct {
@@ -43,7 +44,11 @@ func (d *DNADatabase) CheckIfDNAExists(dna []string) (bool, error) {
 	ctx := context.Background()
 
 	err := dnaCollection.FindOne(ctx, query).Decode(&dnaEntity)
-	if err != nil {
+
+	if err != nil  {
+		if err == mongo.ErrNoDocuments {
+			return false, nil
+		}
 		return false, err
 	}
 
