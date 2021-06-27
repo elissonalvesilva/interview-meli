@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/golang/mock v1.6.0
+	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/stretchr/testify v1.7.0
 	go.mongodb.org/mongo-driver v1.5.3
 	golang.org/x/net v0.0.0-20210614182718-04defd469f4e // indirect
