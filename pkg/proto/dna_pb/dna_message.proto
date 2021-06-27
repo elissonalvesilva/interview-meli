@@ -1,7 +1,7 @@
 syntax="proto3";
 
-package dna;
-option go_package = "pkg/proto/dna";
+package dna_pb;
+option go_package = "pkg/proto/dna_pb";
 
 message DNARequest {
     repeated string dna = 1;
