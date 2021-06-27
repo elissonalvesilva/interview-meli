@@ -1,0 +1,17 @@
+syntax="proto3";
+
+package dna;
+option go_package = "pkg/proto/dna";
+
+message DNARequest {
+    repeated string dna = 1;
+}
+
+message DNAResponse {
+    string typeDNA = 1;
+    string dnaError = 2;
+}
+
+service DNAServiceAnalyzer {
+    rpc Analyze(DNARequest) returns (DNAResponse) {};
+}
