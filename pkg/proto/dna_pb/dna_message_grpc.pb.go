@@ -43,7 +43,6 @@ func (c *dNAServiceAnalyzerClient) Analyze(ctx context.Context, in *DNARequest, 
 // for forward compatibility
 type DNAServiceAnalyzerServer interface {
 	Analyze(context.Context, *DNARequest) (*DNAResponse, error)
-	mustEmbedUnimplementedDNAServiceAnalyzerServer()
 }
 
 // UnimplementedDNAServiceAnalyzerServer must be embedded to have forward compatible implementations.
@@ -52,14 +51,6 @@ type UnimplementedDNAServiceAnalyzerServer struct {
 
 func (UnimplementedDNAServiceAnalyzerServer) Analyze(context.Context, *DNARequest) (*DNAResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Analyze not implemented")
-}
-func (UnimplementedDNAServiceAnalyzerServer) mustEmbedUnimplementedDNAServiceAnalyzerServer() {}
-
-// UnsafeDNAServiceAnalyzerServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to DNAServiceAnalyzerServer will
-// result in compilation errors.
-type UnsafeDNAServiceAnalyzerServer interface {
-	mustEmbedUnimplementedDNAServiceAnalyzerServer()
 }
 
 func RegisterDNAServiceAnalyzerServer(s grpc.ServiceRegistrar, srv DNAServiceAnalyzerServer) {
