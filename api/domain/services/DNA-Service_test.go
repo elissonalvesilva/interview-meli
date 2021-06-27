@@ -17,12 +17,14 @@ func TestGetStatsSimianHuman(t *testing.T) {
 
 		ctrl := gomock.NewController(t)
 		mockDNARepository := mock.NewMockDNARepository(ctrl)
+		mockDNAAnalyzeServiceGRPC := mock.NewMockAnalyzeGRPC(ctrl)
+		service := NewDNAAnalyzeService(mockDNAAnalyzeServiceGRPC)
 
 		handlerError := "error to get stats"
 
 		mockDNARepository.EXPECT().StatsHumanSimian().Return(protocols.StatsResponse{}, errors.New(handlerError))
 
-		sut := NewDNAService(mockDNARepository)
+		sut := NewDNAService(mockDNARepository, *service)
 		resp, err := sut.GetStatsSimianHuman()
 		assert.NotNil(t, err, handlerError)
 		assert.Error(t, err, handlerError)
@@ -34,11 +36,13 @@ func TestGetStatsSimianHuman(t *testing.T) {
 
 		ctrl := gomock.NewController(t)
 		mockDNARepository := mock.NewMockDNARepository(ctrl)
+		mockDNAAnalyzeServiceGRPC := mock.NewMockAnalyzeGRPC(ctrl)
+		service := NewDNAAnalyzeService(mockDNAAnalyzeServiceGRPC)
 
 
 		mockDNARepository.EXPECT().StatsHumanSimian().Return(mock.Stats, nil)
 
-		sut := NewDNAService(mockDNARepository)
+		sut := NewDNAService(mockDNARepository, *service)
 		resp, err := sut.GetStatsSimianHuman()
 		assert.Nil(t, err)
 		assert.Equal(t, mock.Stats, resp)
@@ -51,8 +55,10 @@ func TestAddDNA(t *testing.T) {
 
 		ctrl := gomock.NewController(t)
 		mockDNARepository := mock.NewMockDNARepository(ctrl)
+		mockDNAAnalyzeServiceGRPC := mock.NewMockAnalyzeGRPC(ctrl)
+		service := NewDNAAnalyzeService(mockDNAAnalyzeServiceGRPC)
 
-		sut := NewDNAService(mockDNARepository)
+		sut := NewDNAService(mockDNARepository, *service)
 		_, err := sut.CreateDNA([]string{})
 
 		assert.NotNil(t, err, entity.ErrEmptyDNA)
@@ -64,11 +70,13 @@ func TestAddDNA(t *testing.T) {
 
 		ctrl := gomock.NewController(t)
 		mockDNARepository := mock.NewMockDNARepository(ctrl)
+		mockDNAAnalyzeServiceGRPC := mock.NewMockAnalyzeGRPC(ctrl)
+		service := NewDNAAnalyzeService(mockDNAAnalyzeServiceGRPC)
 
 		handlerError := "handler error"
 		mockDNARepository.EXPECT().CheckIfDNAExists(mock.DNA).Return(false, errors.New("handlerError"))
 
-		sut := NewDNAService(mockDNARepository)
+		sut := NewDNAService(mockDNARepository, *service)
 		resp, err := sut.CreateDNA(mock.DNA)
 
 		assert.NotNil(t, err, handlerError)
@@ -81,15 +89,37 @@ func TestAddDNA(t *testing.T) {
 
 		ctrl := gomock.NewController(t)
 		mockDNARepository := mock.NewMockDNARepository(ctrl)
+		mockDNAAnalyzeServiceGRPC := mock.NewMockAnalyzeGRPC(ctrl)
+		service := NewDNAAnalyzeService(mockDNAAnalyzeServiceGRPC)
 
 		errorDNA := errors.New(constants.DNAExists)
 		mockDNARepository.EXPECT().CheckIfDNAExists(mock.DNA).Return(true, nil)
 
-		sut := NewDNAService(mockDNARepository)
+		sut := NewDNAService(mockDNARepository, *service)
 		resp, err := sut.CreateDNA(mock.DNA)
 
 		assert.NotNil(t, err, errorDNA)
 		assert.Error(t, err, errorDNA)
+		assert.Equal(t, entity.DNASequence{}, resp)
+	})
+
+	t.Run("Should return a error if AnalyzeDNA throws", func(t *testing.T) {
+		t.Parallel()
+
+		ctrl := gomock.NewController(t)
+		mockDNARepository := mock.NewMockDNARepository(ctrl)
+		mockDNAAnalyzeServiceGRPC := mock.NewMockAnalyzeGRPC(ctrl)
+		service := NewDNAAnalyzeService(mockDNAAnalyzeServiceGRPC)
+
+		handlerError := "handlerError"
+		mockDNARepository.EXPECT().CheckIfDNAExists(mock.DNA).Return(false, nil)
+		mockDNAAnalyzeServiceGRPC.EXPECT().AnalyzeDNA(gomock.Any()).Return("", errors.New(handlerError))
+
+		sut := NewDNAService(mockDNARepository, *service)
+		resp, err := sut.CreateDNA(mock.DNA)
+
+		assert.NotNil(t, err, handlerError)
+		assert.Error(t, err, handlerError)
 		assert.Equal(t, entity.DNASequence{}, resp)
 	})
 
@@ -98,12 +128,16 @@ func TestAddDNA(t *testing.T) {
 
 		ctrl := gomock.NewController(t)
 		mockDNARepository := mock.NewMockDNARepository(ctrl)
+		mockDNAAnalyzeServiceGRPC := mock.NewMockAnalyzeGRPC(ctrl)
+		service := NewDNAAnalyzeService(mockDNAAnalyzeServiceGRPC)
 
 		handlerError := "handlerError"
 		mockDNARepository.EXPECT().CheckIfDNAExists(mock.DNA).Return(false, nil)
+		mockDNAAnalyzeServiceGRPC.EXPECT().AnalyzeDNA(gomock.Any()).Return("SIMIAN", nil)
+
 		mockDNARepository.EXPECT().AddDNA(mock.DNA, "SIMIAN").Return(errors.New(handlerError))
 
-		sut := NewDNAService(mockDNARepository)
+		sut := NewDNAService(mockDNARepository, *service)
 		resp, err := sut.CreateDNA(mock.DNA)
 
 		assert.NotNil(t, err, handlerError)
@@ -116,11 +150,14 @@ func TestAddDNA(t *testing.T) {
 
 		ctrl := gomock.NewController(t)
 		mockDNARepository := mock.NewMockDNARepository(ctrl)
+		mockDNAAnalyzeServiceGRPC := mock.NewMockAnalyzeGRPC(ctrl)
+		service := NewDNAAnalyzeService(mockDNAAnalyzeServiceGRPC)
 
 		mockDNARepository.EXPECT().CheckIfDNAExists(mock.DNA).Return(false, nil)
+		mockDNAAnalyzeServiceGRPC.EXPECT().AnalyzeDNA(gomock.Any()).Return("SIMIAN", nil)
 		mockDNARepository.EXPECT().AddDNA(mock.DNA, "SIMIAN").Return(nil)
 
-		sut := NewDNAService(mockDNARepository)
+		sut := NewDNAService(mockDNARepository, *service)
 		resp, err := sut.CreateDNA(mock.DNA)
 
 		assert.Nil(t, err)
