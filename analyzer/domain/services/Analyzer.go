@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	constants "github.com/elissonalvesilva/interview-meli/analyzer/shared"
 	"strings"
 )
@@ -37,6 +38,7 @@ func (a *Analyzer) DNAAnalyzer(dna []string) (string, error) {
 	MatrixLength = len(dna)
 	dnaMatrixLength := len(dna)
 
+	fmt.Printf("Analyzing DNA: %s \n", dna)
 	for row := 0; row < dnaMatrixLength; row++ {
 		for col := 0; col < dnaMatrixLength; col++ {
 			currentLetter := matrix[row][col]
@@ -44,12 +46,14 @@ func (a *Analyzer) DNAAnalyzer(dna []string) (string, error) {
 			if SearchForSimianValidRepetitions(matrix, row, col, row, col, 0, currentLetter) {
 				count += 1
 				if count >= sequencesNeeded {
+					fmt.Printf("Finished Analyze of DNA: %s. This DNA is: %s \n", dna, constants.DNATypeSimian)
 					return constants.DNATypeSimian, nil
 				}
 			}
 		}
 	}
 
+	fmt.Printf("Finished Analyze of DNA: %s. This DNA is: %s \n", dna, constants.DNATypeHuman)
 	return constants.DNATypeHuman, nil
 }
 
