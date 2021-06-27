@@ -5,7 +5,11 @@ import (
 	mongodb "github.com/elissonalvesilva/interview-meli/api/infra/db/mongodb/helper"
 	"github.com/elissonalvesilva/interview-meli/api/server/factories/controllers"
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
+	"log"
 	"net/http"
+	"os"
+	"strconv"
 )
 
 type App struct {
@@ -49,6 +53,16 @@ func NewApp(port int) *App {
 	}
 }
 
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error to load .env file err: %v", err)
+	}
+}
+
 func main() {
-	NewApp(4513).Run("API")
+	port, _ := strconv.Atoi(os.Getenv("APP_PORT"))
+	name := os.Getenv("APP_NAME")
+
+	NewApp(port).Run(name)
 }
