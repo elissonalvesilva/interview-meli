@@ -1,4 +1,4 @@
-package server
+package main
 
 import (
 	"github.com/elissonalvesilva/interview-meli/analyzer/servers"
@@ -8,7 +8,7 @@ import (
 	"net"
 )
 
-func Run () {
+func main() {
 	analyzerServer := servers.NewAnalyzerServer()
 
 	grpcServer := grpc.NewServer()
@@ -25,5 +25,4 @@ func Run () {
 	if err != nil {
 		log.Fatal("cannot start server: ", err)
 	}
-
 }
