@@ -8,6 +8,7 @@ import (
 	"github.com/elissonalvesilva/interview-meli/api/tests/mock"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
+	"go.mongodb.org/mongo-driver/mongo"
 
 	"testing"
 )
@@ -30,6 +31,25 @@ func TestCheckIfDNAExists(t *testing.T) {
 		sut := NewDNADatabase(mockDb)
 		resp, err := sut.CheckIfDNAExists(mock.DNA)
 		assert.Error(t, err, handlerError)
+		assert.Equal(t, false, resp)
+	})
+
+	t.Run("Should return a error if FindOne Throws with ErrNoDocuments", func(t *testing.T) {
+		t.Parallel()
+
+		ctrl := gomock.NewController(t)
+		mockDb := mock.NewMockMongoDB(ctrl)
+		mockCollection := mock.NewMockCollectionHelper(ctrl)
+		mockSingleResult := mock.NewMockSingleResultHelper(ctrl)
+
+		mockDb.EXPECT().Collection("dna").Return(mockCollection)
+		mockSingleResult.EXPECT().Decode(gomock.Any()).Return(errors.New(mongo.ErrNoDocuments.Error()))
+
+		mockCollection.EXPECT().FindOne(gomock.Any(), gomock.Any()).Return(mockSingleResult)
+
+		sut := NewDNADatabase(mockDb)
+		resp, err := sut.CheckIfDNAExists(mock.DNA)
+		assert.Error(t, err, mongo.ErrNoDocuments)
 		assert.Equal(t, false, resp)
 	})
 
