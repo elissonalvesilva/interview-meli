@@ -1,4 +1,4 @@
-package domain
+package services
 
 import (
 	constants "github.com/elissonalvesilva/interview-meli/analyzer/shared"
