@@ -145,6 +145,25 @@ func TestAddDNA(t *testing.T) {
 		assert.Equal(t, entity.DNASequence{}, resp)
 	})
 
+	t.Run("Should return a error if type DNA is equals to HUMAN", func(t *testing.T) {
+		t.Parallel()
+
+		ctrl := gomock.NewController(t)
+		mockDNARepository := mock.NewMockDNARepository(ctrl)
+		mockDNAAnalyzeServiceGRPC := mock.NewMockAnalyzeGRPC(ctrl)
+		service := NewDNAAnalyzeService(mockDNAAnalyzeServiceGRPC)
+
+		mockDNARepository.EXPECT().CheckIfDNAExists(mock.DNA).Return(false, nil)
+		mockDNAAnalyzeServiceGRPC.EXPECT().AnalyzeDNA(gomock.Any()).Return("HUMAN", nil)
+		mockDNARepository.EXPECT().AddDNA(mock.DNA, "HUMAN").Return(nil)
+
+		sut := NewDNAService(mockDNARepository, *service)
+		resp, err := sut.CreateDNA(mock.DNA)
+
+		assert.Error(t, err, constants.DNATypeHuman)
+		assert.Equal(t, entity.DNASequence{}, resp)
+	})
+
 	t.Run("Should return a dna on success", func(t *testing.T) {
 		t.Parallel()
 
