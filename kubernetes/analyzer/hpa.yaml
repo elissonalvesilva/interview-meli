@@ -1,0 +1,25 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-interview-hpa
+  namespace: interview-meli
+spec:
+  minReplicas: 1
+  maxReplicas: 8
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api-interview
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 45
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 60

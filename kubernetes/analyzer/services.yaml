@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  api-interview-service
+  namespace: interview-meli
+  labels:
+    app: api-interview
+    tier: backend
+    owner: interview
+spec:
+  selector:
+    app: api-interview
+  ports:
+    - name:  http
+      port:  4513
+      protocol: TCP
+  type: NodePort
