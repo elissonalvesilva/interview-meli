@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: interview-vs
+  namespace: interview-meli
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - istio-interview-gateway
+  http:
+  - match:
+      - uri:
+          exact: /simian
+      - uri:
+          exact: /stats
+    route:
+      - destination:
+          host: api-interview-service
+          port:
+            number: 4513
