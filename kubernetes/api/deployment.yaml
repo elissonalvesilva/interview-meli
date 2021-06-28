@@ -20,7 +20,7 @@ spec:
         owner: interview
     spec:
       containers:
-        - image: acrinterviewelisson.azurecr.io/api-interview:v0.1.0
+        - image: acrinterviewelisson.azurecr.io/api-interview:v0.1.1
           name: api-interview
           resources:
             requests:
