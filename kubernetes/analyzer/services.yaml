@@ -1,17 +1,17 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name:  api-interview-service
+  name:  analyzer-dna-service
   namespace: interview-meli
   labels:
-    app: api-interview
+    app: analyzer-dna
     tier: backend
     owner: interview
 spec:
   selector:
-    app: api-interview
+    app: analyzer-dna
   ports:
-    - name:  http
-      port:  4513
-      protocol: TCP
-  type: NodePort
+    - name:  grpc
+      port:  50051
+      targetPort: 50051
+  type: ClusterIP

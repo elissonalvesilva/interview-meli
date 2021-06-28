@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-interview-fallback
+  name: analyzer-dna-fallback
   namespace: interview-meli
   labels:
-    app: api-interview
+    app: analyzer-dna-application-fallback
     tier: backend
     owner: interview
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: api-interview
+      app: analyzer-dna-fallback
   template:
     metadata:
       labels:
-        app: api-interview
+        app: analyzer-dna-fallback
         tier: backend
         owner: interview
     spec:
       containers:
-        - image: acrinterviewelisson.azurecr.io/api-interview-meli:v0.1.0
-          name: api-interview-fallback
+        - image: acrinterviewelisson.azurecr.io/analyzer-dna:v0.1.0
+          name: analyzer-dna-fallback
           resources:
             requests:
               cpu: 100m
@@ -30,44 +30,14 @@ spec:
               cpu: 500m
               memory: 500Mi
           ports:
-            - containerPort: 4513
+            - containerPort: 50051
               name: http
           env:
-            - name: APP_PORT
-                valueFrom:
-                  secretKeyRef:
-                    key: app_port
-                    name: interview-envs
-            - name: APP_NAME
-                valueFrom:
-                  secretKeyRef:
-                    key: app_name
-                    name: interview-envs
-            - name: DB_USERNAME
-                valueFrom:
-                  secretKeyRef:
-                    key: db_username
-                    name: interview-envs
-            - name: DB_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    key: db_password
-                    name: interview-envs
-            - name: DB_NAME
-                valueFrom:
-                  secretKeyRef:
-                    key: db_name
-                    name: interview-envs
-            - name: DB_URI
-                valueFrom:
-                  secretKeyRef:
-                    key: db_uri
-                    name: interview-envs
+            - name: GRPC_ANALYZER_HOST
+              value: "0.0.0.0"
             - name: GRPC_ANALYZER_PORT
-                valueFrom:
-                  secretKeyRef:
-                    key: grpc_analyzer_port
-                    name: interview-envs
-      imagePullSecrets:
-        - name:  acr-search-secret
+              valueFrom:
+                secretKeyRef:
+                  key: grpc_analyzer_port
+                  name: interview-envs
       restartPolicy: Always
