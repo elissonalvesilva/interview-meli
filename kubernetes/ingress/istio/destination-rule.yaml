@@ -1,4 +1,3 @@
-
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
@@ -7,3 +6,17 @@ metadata:
 spec:
   host: interview-analyzer-dna-application
 
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name:  istio-destination-rule-circuit-breaker
+  namespace: interview-meli
+spec:
+  host: analyzer-dna
+  trafficPolicy:
+    outlierDetection:
+      consecutive5xxErrors: 10
+      interval: 10s
+      baseEjectionTime: 30s
+      maxEjectionPercent: 100
