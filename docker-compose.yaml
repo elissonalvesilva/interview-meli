@@ -13,6 +13,30 @@ services:
       - ./docker/mongodb/entrypoint.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - app-network
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    container_name: api
+    ports:
+    - 4513:4513
+    networks:
+      - app-network
+    depends_on:
+      - analyzer
+      - db
+    links:
+      - analyzer
+      - "db:database"
+  analyzer:
+    build:
+      context: .
+      dockerfile: ./docker/analyzer/Dockerfile
+    container_name: analyzer
+    ports:
+      - 50051:50051
+    networks:
+      - app-network
 networks:
   app-network:
     driver: bridge
