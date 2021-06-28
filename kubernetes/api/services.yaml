@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  api-interview-service
+  namespace: interview-meli
+  labels:
+    app: interview-analyzer-dna-application
+    tier: backend
+    owner: interview
+    service: api-interview
+spec:
+  selector:
+    app: interview-analyzer-dna-application
+  ports:
+    - name:  http
+      port:  4513
+      protocol: TCP
+  type: NodePort
