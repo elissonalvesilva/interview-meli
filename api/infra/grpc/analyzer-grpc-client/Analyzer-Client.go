@@ -32,7 +32,7 @@ func (grpcService *AnalyzerGRPCService) AnalyzeDNA(dna []string) (string, error)
 
 	res, err := client.Analyze(context.Background(), request)
 	if err != nil {
-		log.Fatalf("Error during execution: %v", err)
+		return "", err
 	}
 
 	typeDNA := res.TypeDNA
