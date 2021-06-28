@@ -31,6 +31,7 @@ func (ctrl *DNAController) AnalyzeDNA(w http.ResponseWriter, r *http.Request) {
 
 	if errService != nil {
 		w.WriteHeader(http.StatusForbidden)
+		json.NewEncoder(w).Encode(errService)
 		return
 	}
 
